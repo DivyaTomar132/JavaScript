@@ -7,15 +7,7 @@ let playerHealth = chosenHealth;
 let monsterHealth = chosenHealth;
 adjustHealthBars(chosenHealth);
 
-function attack(type) {
-  let damage;
-  if (type === "Attack") {
-    damage = ATTACK_VALUE;
-  } else if (type === "StrongAttack") {
-    damage = STRONG_ATTACK;
-  }
-  const damageMonster = dealMonsterDamage(damage);
-  monsterHealth -= damageMonster;
+function attackPlayer() {
   const damagePlayer = dealPlayerDamage(PLAYER_VAUE);
   playerHealth -= damagePlayer;
   if (monsterHealth <= 0 && playerHealth > 0) {
@@ -25,6 +17,18 @@ function attack(type) {
   } else if (monsterHealth <= 0 && playerHealth <= 0) {
     alert("Draw");
   }
+}
+
+function attack(type) {
+  let damage;
+  if (type === "Attack") {
+    damage = ATTACK_VALUE;
+  } else if (type === "StrongAttack") {
+    damage = STRONG_ATTACK;
+  }
+  const damageMonster = dealMonsterDamage(damage);
+  monsterHealth -= damageMonster;
+  attackPlayer();
 }
 
 function attackHandler() {
@@ -43,6 +47,8 @@ function healPlayer() {
   }
   increasePlayerHealth(heal);
   playerHealth += heal;
+  //player should be hit by monster after every heal
+  attackPlayer();
 }
 attackBtn.addEventListener("click", attackHandler);
 strongAttackBtn.addEventListener("click", strongAttack);
