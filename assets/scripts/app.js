@@ -6,8 +6,14 @@ let playerHealth = chosenHealth;
 let monsterHealth = chosenHealth;
 adjustHealthBars(chosenHealth);
 
-function attackHandler() {
-  const damageMonster = dealMonsterDamage(ATTACK_VALUE);
+function attack(type) {
+  let damage;
+  if (type === "Attack") {
+    damage = ATTACK_VALUE;
+  } else if (type === "StrongAttack") {
+    damage = STRONG_ATTACK;
+  }
+  const damageMonster = dealMonsterDamage(damage);
   monsterHealth -= damageMonster;
   const damagePlayer = dealPlayerDamage(PLAYER_VAUE);
   playerHealth -= damagePlayer;
@@ -19,18 +25,12 @@ function attackHandler() {
     alert("Draw");
   }
 }
+
+function attackHandler() {
+  attack("Attack");
+}
 function strongAttack() {
-  const damageMonster = dealMonsterDamage(STRONG_ATTACK);
-  monsterHealth -= damageMonster;
-  const damagePlayer = dealPlayerDamage(PLAYER_VAUE);
-  playerHealth -= damagePlayer;
-  if (monsterHealth <= 0 && playerHealth > 0) {
-    alert("You Won");
-  } else if (monsterHealth > 0 && playerHealth <= 0) {
-    alert("You Lost");
-  } else if (monsterHealth <= 0 && playerHealth <= 0) {
-    alert("Draw");
-  }
+  attack("StrongAttack");
 }
 attackBtn.addEventListener("click", attackHandler);
 strongAttackBtn.addEventListener("click", strongAttack);
