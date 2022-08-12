@@ -2,8 +2,12 @@ const ATTACK_VALUE = 10;
 const STRONG_ATTACK = 11;
 const PLAYER_VALUE = 10;
 const HEAL_PLAYER = 15;
-const chosenHealth = 100;
+const userInput = prompt("Enter initial health for monster and player", "100");
 let hasBonus = true;
+let chosenHealth = parseInt(userInput);
+if (isNaN(chosenHealth) || chosenHealth <= 0) {
+  chosenHealth = 100;
+}
 let playerHealth = chosenHealth;
 let monsterHealth = chosenHealth;
 adjustHealthBars(chosenHealth);
