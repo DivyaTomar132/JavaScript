@@ -1,6 +1,7 @@
 const ATTACK_VALUE = 10;
 const STRONG_ATTACK = 11;
 const PLAYER_VAUE = 10;
+const HEAL_PLAYER = 15;
 const chosenHealth = 100;
 let playerHealth = chosenHealth;
 let monsterHealth = chosenHealth;
@@ -32,5 +33,17 @@ function attackHandler() {
 function strongAttack() {
   attack("StrongAttack");
 }
+function healPlayer() {
+  let heal;
+  if (playerHealth >= chosenHealth - HEAL_PLAYER) {
+    alert("Max Heal reached");
+    heal = chosenHealth - playerHealth;
+  } else {
+    heal = HEAL_PLAYER;
+  }
+  increasePlayerHealth(heal);
+  playerHealth += heal;
+}
 attackBtn.addEventListener("click", attackHandler);
 strongAttackBtn.addEventListener("click", strongAttack);
+healBtn.addEventListener("click", healPlayer);
