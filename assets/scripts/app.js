@@ -3,13 +3,21 @@ const STRONG_ATTACK = 11;
 const PLAYER_VAUE = 10;
 const HEAL_PLAYER = 15;
 const chosenHealth = 100;
+let hasBonus = true;
 let playerHealth = chosenHealth;
 let monsterHealth = chosenHealth;
 adjustHealthBars(chosenHealth);
 
 function attackPlayer() {
+  const initialPlayerHealth = playerHealth;
   const damagePlayer = dealPlayerDamage(PLAYER_VAUE);
   playerHealth -= damagePlayer;
+  if (playerHealth <= 0 && hasBonus) {
+    removeBonusLife();
+    playerHealth = initialPlayerHealth;
+    setPlayerHealth(playerHealth);
+    alert("Bonus Used, Health Recoverd to most recent health");
+  }
   if (monsterHealth <= 0 && playerHealth > 0) {
     alert("You Won");
   } else if (monsterHealth > 0 && playerHealth <= 0) {
