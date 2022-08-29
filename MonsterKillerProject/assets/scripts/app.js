@@ -5,6 +5,7 @@ const HEAL_PLAYER = 15;
 const userInput = prompt("Enter initial health for monster and player", "100");
 let hasBonus = true;
 let chosenHealth = parseInt(userInput);
+let battleLog = [];
 if (isNaN(chosenHealth) || chosenHealth <= 0) {
   chosenHealth = 100;
 }
@@ -25,12 +26,16 @@ function attackPlayer() {
   }
   if (monsterHealth <= 0 && playerHealth > 0) {
     alert("You Won");
+    logEvent("player won");
   } else if (monsterHealth > 0 && playerHealth <= 0) {
     alert("You Lost");
+    logEvent("player lost");
   } else if (monsterHealth <= 0 && playerHealth <= 0) {
     alert("Draw");
+    logEvent("draw ");
     reset(); // reset game only when there is a Draw
   }
+  logEvent("player attacked");
 }
 
 function attack(type) {
@@ -42,6 +47,7 @@ function attack(type) {
   }
   const damageMonster = dealMonsterDamage(damage);
   monsterHealth -= damageMonster;
+  logEvent("monster attack");
   attackPlayer();
 }
 
@@ -60,6 +66,7 @@ function healPlayer() {
     heal = HEAL_PLAYER;
   }
   increasePlayerHealth(heal);
+  logEvent("player healed");
   playerHealth += heal;
   //player should be hit by monster after every heal
   attackPlayer();
@@ -68,8 +75,21 @@ function healPlayer() {
 function reset() {
   playerHealth = chosenHealth;
   monsterHealth = chosenHealth;
+  logEvent("reset");
   resetGame(chosenHealth);
+}
+
+function logEvent(type) {
+  logEntry = {
+    event: type,
+  };
+  battleLog.push(logEntry);
+}
+
+function logButton() {
+  console.log(battleLog);
 }
 attackBtn.addEventListener("click", attackHandler);
 strongAttackBtn.addEventListener("click", strongAttack);
 healBtn.addEventListener("click", healPlayer);
+logBtn.addEventListener("click", logButton);
